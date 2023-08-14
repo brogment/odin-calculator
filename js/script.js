@@ -7,35 +7,29 @@ let displayVal = '';
 
 function operate (num1, operator, num2) {
     if(operator=='+'){
-        console.log (add(num1, num2));
-        document.getElementById('display').textContent = add(num1, num2);
+        return add(num1, num2);
     } else if(operator=='-'){
-        console.log (subtrack(num1, num2));
+        return subtrack(num1, num2);
     } else if(operator=='*'){
-        console.log (multiply(num1, num2));
+        return multiply(num1, num2);
     } else if(operator=='/'){
-        console.log (divide(num1, num2));
-    }
+        return divide(num1, num2);
+    } 
 }
-
 function add (num1, num2){
     return num1 + num2;
 }
-
 function subtrack (num1, num2){
     return num1 - num2;
 }
-
 function multiply (num1, num2){
+  
     return num1 * num2;
 }
-
 function divide (num1, num2){
+
     return num1 / num2;
 }
-
-
-
 
 
 function depressKey(e){
@@ -43,21 +37,38 @@ function depressKey(e){
     keyButton.classList.add('pressed');
     
     displayVal += e.key;
+
+    console.log(`Num1: ${num1}`)
+    console.log(`DisplayVal: ${displayVal}`)
+
     document.getElementById('display').textContent = displayVal;
-    
-    if(e.key==='+'){
-        operator = '+';
-        num1 = num1 + Number(displayVal.slice(0, -1));
+    if(e.key==='+' || e.key==='-' || e.key==='*' || e.key==='/'){
+        operator = e.key;
+
+
+        if(num1 == 0){
+            num1=Number(displayVal.slice(0, -1));
+        } else {num1 = operate(num1, operator, Number(displayVal.slice(0, -1)))}
+
         displayVal = '';
         document.getElementById('display').textContent = num1;
+
+        console.log(`Num1: ${num1}`)
+        console.log(`DisplayVal: ${displayVal}`)
     }
 
     if(e.key==='='){
-        num2 = +(displayVal.slice(0, -1));
-        displayVal = operate(num1, operator, num2);
+        if(num1 == 0){
+            num1=Number(displayVal.slice(0, -1));
+        } else {num1 = operate(num1, operator, Number(displayVal.slice(0, -1)))};
+        operator = '';
+        
+        displayVal = '';
+        document.getElementById('display').textContent = num1;
+        console.log(`Num1: ${num1}`)
+        console.log(`DisplayVal: ${displayVal}`)
         
     }
-
     
 }
 
