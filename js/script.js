@@ -3,7 +3,7 @@ let num1 = 0;
 let num2 = 0;
 let operator = '';
 let displayVal = '';
-document.getElementById('display').textContent = 0;
+document.getElementById('display').textContent = displayVal;
 
 function operate (num1, operator, num2) {
     if(operator=='+'){
@@ -30,61 +30,74 @@ function divide (num1, num2){
     return num1 / num2;
 }
 
-
-function depressKey(e){
-    
-    const keyButton  = document.querySelector(`[data-key="${e.keyCode}"]`);
-    keyButton.classList.add('pressed');  
-
-    displayVal += e.key;
-    document.getElementById('display').textContent = displayVal;
-
-    if(e.key==='+' || e.key==='-' || e.key==='*' || e.key==='/'){
-        
+function action(str){
+    if(str==='+' || str==='-' || str==='*' || str==='/'){
         if(operator){ 
-            num1=operate(num1, operator, Number(displayVal.slice(0, -1)))
-            operator = e.key;
+            num1=operate(num1, operator, Number(displayVal))
+            operator = str;
             displayVal = '';
             document.getElementById('display').textContent = num1;
-
         } else {
 
-        operator = e.key;
+        operator = str;
 
-        if(num1 == 0){
-            num1=Number(displayVal.slice(0, -1));
-        } else {num1 = operate(num1, operator, Number(displayVal.slice(0, -1)))}
+        if(num1 === 0){
+            num1=Number(displayVal);
+        } else {num1 = operate(num1, operator, Number(displayVal))}
 
         displayVal = '';
         document.getElementById('display').textContent = num1;
         }
-    }
-
-    if(e.key==='='){
+    }else if(str==='='){
         if(num1 == 0){
-            num1=Number(displayVal.slice(0, -1));
+            num1=Number(displayVal);
         } else if(operator === ''){
-            num1=Number(displayVal.slice(0, -1));
+            num1=Number(displayVal);
         } else {
-            num1 = operate(num1, operator, Number(displayVal.slice(0, -1)))
-        }
-        
+            num1 = operate(num1, operator, Number(displayVal))
+        }      
         operator = '';
         displayVal = num1;
         num1=0;
         document.getElementById('display').textContent = displayVal;     
+    } else if(str === 'AC'){
+        //causes bug in * and / after
+        num1 = 0;
+        displayVal = '';
+        document.getElementById('display').textContent = num1;
+        operator = '';
+    } else if(str === '%'){
+        displayVal = Number(displayVal) / 100
+        document.getElementById('display').textContent = displayVal;
+    } else if(str === '+/-'){
+        displayVal = Number(displayVal) * -1;
+        document.getElementById('display').textContent = displayVal;
+    } else if(/^[0-9]$/.test(str) || str === '.'){
+        displayVal += str;
+        document.getElementById('display').textContent = displayVal;
     }
 }
 
-//only for press effect
-function unDepressKey(e){
+document.addEventListener('keydown', (e) => {
     const keyButton  = document.querySelector(`[data-key="${e.keyCode}"]`);
-    keyButton.classList.remove('pressed');
-}
+    keyButton.classList.add('pressed');
+    action(e.key); 
+});
 
+document.addEventListener('keyup', (e) =>{
+    const keyButton  = document.querySelector(`[data-key="${e.keyCode}"]`);
+    keyButton.classList.remove('pressed')
+});
 
-
-window.addEventListener('keydown', depressKey);
-window.addEventListener('keyup', unDepressKey);
-window.addEventListener('mousedown', depressKey);
-window.addEventListener('mouseup', unDepressKey);
+document.querySelectorAll('.key').forEach(button => {
+    button.addEventListener('mousedown', (e) => {
+        button.classList.add('pressed');
+        action(e.target.innerText)
+    });
+    button.addEventListener('mouseup', () => {
+        button.classList.remove('pressed');
+    });
+    button.addEventListener('mouseleave', () => {
+        button.classList.remove('pressed');
+    });
+});

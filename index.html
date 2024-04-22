@@ -5,31 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Odin Calculator</title>
     <link rel="stylesheet" href="./css/style.css">
+    
 </head>
 <body>
     <div class="calculator">
-        <div id="display"></div>
-            <div id="keyspace">
-                <button data-key="97" class="key">1</button>
-                <button data-key="98" class="key">2</button>
-                <button data-key="99" class="key">3</button>
-                <button data-key="100" class="key">4</button>
-                <button data-key="101" class="key">5</button>
-                <button data-key="102" class="key">6</button>
-                <button data-key="103" class="key">7</button>
-                <button data-key="104" class="key">8</button>
-                <button data-key="105" class="key">9</button>
-                <button data-key="96" class="key">0</button>
-                <button data-key="107" class="key">+</button>
-                <button data-key="109" class="key">-</button>
-                <button data-key="106" class="key">*</button>
-                <button data-key="111" class="key">/</button>
-                <button data-key="187" class="key">=</button>
-                <button class="key">+/-</button>
-                <button class="key">AC</button>
-                <button class="key">%</button>
-                <button class="key">.</button>
-            </div>
+        <div class="container">
+            <div id="display"></div>
+            <button class="key misc">AC</button>
+            <button class="key misc">+/-</button>
+            <button class="key misc">%</button>
+            <button data-key="111" class="key operator">/</button>
+            <button data-key="103" class="key number">7</button>
+            <button data-key="104" class="key number">8</button>
+            <button data-key="105" class="key number">9</button>
+            <button data-key="106" class="key operator">*</button>
+            <button data-key="100" class="key number">4</button>
+            <button data-key="101" class="key number">5</button>
+            <button data-key="102" class="key number">6</button>
+            <button data-key="109" class="key operator">-</button>
+            <button data-key="97" class="key number">1</button>
+            <button data-key="98" class="key number">2</button>
+            <button data-key="99" class="key number">3</button>
+            <button data-key="107" class="key operator">+</button>
+            <button data-key="96" class="key number" id="zero">0</button>
+            <button data-key="110" class="key number">.</button>
+            <button data-key="187" class="key operator">=</button> 
+        </div>
     </div>
     <script src="./js/script.js"></script>
 </body>
