@@ -31,6 +31,7 @@ function divide (num1, num2){
 }
 
 function action(str){
+
     if(str==='+' || str==='-' || str==='*' || str==='/'){
         if(operator){ 
             num1=operate(num1, operator, Number(displayVal))
@@ -38,17 +39,16 @@ function action(str){
             displayVal = '';
             document.getElementById('display').textContent = num1;
         } else {
-
-        operator = str;
-
-        if(num1 === 0){
-            num1=Number(displayVal);
-        } else {num1 = operate(num1, operator, Number(displayVal))}
-
-        displayVal = '';
-        document.getElementById('display').textContent = num1;
+            operator = str;
+            if(num1 === 0){
+                num1=Number(displayVal);
+            } else {
+                num1 = operate(num1, operator, Number(displayVal))
+            }
+            displayVal = '';
+            document.getElementById('display').textContent = num1;
         }
-    }else if(str==='='){
+    } else if(str==='='){
         if(num1 == 0){
             num1=Number(displayVal);
         } else if(operator === ''){
@@ -61,7 +61,6 @@ function action(str){
         num1=0;
         document.getElementById('display').textContent = displayVal;     
     } else if(str === 'AC'){
-        //causes bug in * and / after
         num1 = 0;
         displayVal = '';
         document.getElementById('display').textContent = num1;
@@ -72,9 +71,16 @@ function action(str){
     } else if(str === '+/-'){
         displayVal = Number(displayVal) * -1;
         document.getElementById('display').textContent = displayVal;
-    } else if(/^[0-9]$/.test(str) || str === '.'){
+    } else if(/^[0-9]$/.test(str)){
         displayVal += str;
         document.getElementById('display').textContent = displayVal;
+    } else if(str === '.'){
+        if(displayVal.includes('.'))
+            return;
+        else {
+            displayVal += str;
+            document.getElementById('display').textContent = displayVal;
+        }
     }
 }
 
